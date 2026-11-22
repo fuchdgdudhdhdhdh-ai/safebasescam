@@ -30,10 +30,10 @@ def card(person, query, count):
     safe_query = html.escape(query)
     if person is None:
         return (
-            f"🟡 <b>Информация о {safe_query}</b>\n\n"
-            "⚠️ В базе SafeBase нет записей об этом аккаунте.\n"
+            f"🟡 <b>Информация о {safe_query}</b>\\n\\n"
+            "⚠️ В базе SafeBase нет записей об этом аккаунте.\\n"
             "Отсутствие записи не подтверждает надёжность пользователя. "
-            "Проверяйте сделки и используйте безопасные способы оплаты.\n\n"
+            "Проверяйте сделки и используйте безопасные способы оплаты.\\n\\n"
             f"🔎 Пользователя искали {count} раз",
             "🟡 Нет в базе / нет подтверждённых записей",
         )
@@ -41,17 +41,17 @@ def card(person, query, count):
     description = html.escape(person.description or "Не указано")
     if person.kind == "admin":
         return (
-            f"🛡 <b>Информация о {label}</b>\n\n"
-            "⭐ Данный пользователь указан как администратор базы SafeBase.\n"
-            f"Описание: {description}\n\n🔎 Пользователя искали {count} раз",
+            f"🛡 <b>Информация о {label}</b>\\n\\n"
+            "⭐ Данный пользователь указан как администратор базы SafeBase.\\n"
+            f"Описание: {description}\\n\\n🔎 Пользователя искали {count} раз",
             "🛡 Администратор базы SafeBase",
         )
     return (
-        f"🚨 <b>Информация о {label}</b>\n\n"
-        "🔴 <b>Репутация: СКАМЕР</b>\n"
-        f"Описание: {description}\n\n"
+        f"🚨 <b>Информация о {label}</b>\\n\\n"
+        "🔴 <b>Репутация: СКАМЕР</b>\\n"
+        f"Описание: {description}\\n\\n"
         "ℹ️ Это пользовательская запись базы, а не официальное заключение. "
-        "Учитывайте возможность ошибок и проверяйте доказательства.\n\n"
+        "Учитывайте возможность ошибок и проверяйте доказательства.\\n\\n"
         f"🔎 Пользователя искали {count} раз",
         "🚨 Скамер — есть запись в базе",
     )
@@ -101,9 +101,9 @@ async def vote(callback: CallbackQuery):
 @dp.message(Command("start"))
 async def start(message: Message):
     await message.answer(
-        "🛡 <b>SafeBase — проверка репутации</b>\n\n"
-        "В любом чате введите имя бота в поле сообщения, затем @username или числовой Telegram ID.\n"
-        "Пример: <code>@SafeBase_checkbot @example</code>\n\n"
+        "🛡 <b>SafeBase — проверка репутации</b>\\n\\n"
+        "В любом чате введите имя бота в поле сообщения, затем @username или числовой Telegram ID.\\n"
+        "Пример: <code>@SafeBase_checkbot @example</code>\\n\\n"
         "Отсутствие записи в базе не гарантирует безопасность сделки.",
         parse_mode="HTML",
     )
@@ -140,3 +140,7 @@ async def telegram_webhook(request: Request):
         log.exception("Update processing failed")
         raise HTTPException(status_code=500, detail="Update processing failed")
     return JSONResponse({"ok": True})
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", "10000")))
